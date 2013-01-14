@@ -21,7 +21,7 @@ typedef void (^NKReverseGeocodeCompletionHandler)(NKReverseGeocodeResult* result
 #pragma mark forward Geocoding
 
 - (void)geocodeQuery:(NSString*)query
-         boundingBox:(NKGeoBoundingBox)bbox
+         boundingBox:(NKBoundingBox)bbox
   limitToBoundingBox:(BOOL)limitToBox
    completionHandler:(NKGeocodeCompletionHandler)completionHandler;
 
@@ -93,6 +93,16 @@ typedef void (^NKReverseGeocodeCompletionHandler)(NKReverseGeocodeResult* result
  alpha2 code, e.g. gb for the uk, de for germany, etc.
  */
 @property (strong) NSArray* allowedCountries;
+
+/**
+ Set the baseURL of the nominatim server used for all querys
+ */
++ (void) setNominatimServerURL:(NSString*)serverURL;
+
+/**
+ get the previously set URL of the nominatim server
+ */
++ (NSString*) nominatimServerURL;
 
 
 @end

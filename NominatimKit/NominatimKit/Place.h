@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MKPolygon>
+#import <MapKit/MapKit.h>
 #import "NominatimKit.h"
 
 @interface Place : NSObject
@@ -16,13 +16,13 @@
 
 @property OSMType osmType;
 
-@property (strong) long osmID;
+@property long osmID;
 
 @property (strong) MKPolygon* polygon;
 
 @property (strong) MKPolygon* boundingBox;
 
-@property (strong) CLLocationCoordinate2D coordinate;
+@property CLLocationCoordinate2D coordinate;
 
 @property (strong) NSString* displayName;
 

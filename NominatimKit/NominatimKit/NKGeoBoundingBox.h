@@ -12,4 +12,11 @@
 typedef struct {
     CLLocationCoordinate2D topLeft;
     CLLocationCoordinate2D bottomRight;
-} NKGeoBoundingBox;
+} NKBoundingBox;
+
+NKBoundingBox NKBoundingBoxMake(CLLocationCoordinate2D topleft, CLLocationCoordinate2D bottomRight);
+
+#define NKLocationCoordinate2DNull CLLocationCoordinate2DMake(-360.0, -360.0)
+
+#define NKBoundingBoxNull NKBoundingBoxMake(NKLocationCoordinate2DNull,NKLocationCoordinate2DNull)
+
