@@ -16,6 +16,8 @@ typedef struct {
 
 NKBoundingBox NKBoundingBoxMake(CLLocationCoordinate2D topleft, CLLocationCoordinate2D bottomRight);
 
+BOOL NKBoundingBoxIsValid(NKBoundingBox bbox);
+
 #define NKLocationCoordinate2DNull CLLocationCoordinate2DMake(-360.0, -360.0)
 
 #define NKBoundingBoxNull NKBoundingBoxMake(NKLocationCoordinate2DNull,NKLocationCoordinate2DNull)
