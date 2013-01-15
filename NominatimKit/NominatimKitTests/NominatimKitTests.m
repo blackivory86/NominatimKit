@@ -7,6 +7,7 @@
 //
 
 #import "NominatimKitTests.h"
+#import "SenTestingKitAsync.h"
 
 #import "NKGeocoder.h"
 
@@ -47,6 +48,41 @@
     STAssertNoThrowSpecificNamed([coder reverseGeocodeLocation:CLLocationCoordinate2DMake(0.0, 0.0) completionHandler:nil], NSException, @"MissingSettings", @"Email is set - should not throw MissingSettings Exception");
     
     STAssertNoThrowSpecificNamed([coder reverseGeocodeOsmID:000 ofType:Node completionHandler:nil],NSException, @"MissingSettings", @"Email is set - should not throw MissingSettings Exception");
+}
+
+- (void)testGeocodeQueryFailWithEmptyQuery
+{
+    NKGeocoder* coder = [[NKGeocoder alloc] init];
+    coder.email = @"testadress@nominatimkit.com";
+    [NKGeocoder setNominatimServerURL:@"http://nominatim.openstreetmap.org"];
+    
+    [coder geocodeQuery:nil boundingBox:NKBoundingBoxNull limitToBoundingBox:NO completionHandler:^(NSArray *places, NSError *error) {
+        STAssertNotNil(error, @"should return without error");
+        STAssertNil(places, @"returned array should not be nil");
+    }];
+    
+    STFailAfter(1, @"Method should have returned immediately");
+    
+    [coder geocodeQuery:@"" boundingBox:NKBoundingBoxNull limitToBoundingBox:NO completionHandler:^(NSArray *places, NSError *error) {
+        STAssertNotNil(error, @"should return without error");
+        STAssertNil(places, @"returned array should not be nil");
+    }];
+    
+    STFailAfter(1, @"Method should have returned immediately");
+}
+
+- (void)testGeocodeQueryReturnsSuccessfull
+{
+    NKGeocoder* coder = [[NKGeocoder alloc] init];
+    coder.email = @"testadress@nominatimkit.com";
+    [NKGeocoder setNominatimServerURL:@"http://nominatim.openstreetmap.org"];
+    
+    [coder geocodeQuery:@"Hagemannstraße 20" boundingBox:NKBoundingBoxNull limitToBoundingBox:NO completionHandler:^(NSArray *places, NSError *error) {
+        STAssertNil(error, @"should return without error");
+        STAssertNotNil(places, @"returned array should not be nil");
+    }];
+    
+    STFailAfter(60, @"Method should have returned after 60 seconds");
 }
 
 @end

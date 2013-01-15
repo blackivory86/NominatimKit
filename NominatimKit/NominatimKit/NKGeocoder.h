@@ -94,6 +94,8 @@ typedef void (^NKReverseGeocodeCompletionHandler)(NKReverseGeocodeResult* result
  */
 @property (strong) NSArray* allowedCountries;
 
+@property long timeoutInterval;
+
 /**
  Set the baseURL of the nominatim server used for all querys
  */

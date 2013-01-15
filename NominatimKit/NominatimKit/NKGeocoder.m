@@ -7,8 +7,9 @@
 //
 
 #import "NKGeocoder.h"
+#import "NSString+URLEncode.h"
 
-@interface NKGeocoder()
+@interface NKGeocoder() <NSURLConnectionDelegate>
 
 - (NSString*) buildGeneralParamsQueryString;
 
@@ -17,6 +18,10 @@
 - (NSString*) buildReverseGeocodeParamsQueryString;
 
 - (void) validateSettings;
+
+@property (strong) NSURLConnection* connection;
+@property (strong) NSMutableData* responseData;
+@property (strong) NKGeocodeCompletionHandler geocodeCompletionHandler;
 
 @end
 
@@ -120,11 +125,14 @@
     
     //Query-String
     if(query && query.length > 0){
-        //TODO:
-        NSLog(@"TODO: HTML-escape the query string");
+        //URL-Encode the parameter
+        query = [query stringByURLEncodingString];
         url = [url stringByAppendingFormat:@"q=%@",query];
     } else {
-        //TODO: call completion hangler with error
+        //TODO: define good domain and error-code
+        NSError* e = [NSError errorWithDomain:@"NominationKitErrorDomain" code:100 userInfo:nil];
+        completionHandler(nil, e);
+        return;
     }
     
     //BoundingBox
@@ -143,15 +151,21 @@
     NSString* otherParams = [self buildGeocodeParamsQueryString];
     url = [url stringByAppendingString:otherParams];
     
-    
-    
-    //TODO: start query
+    //start query
+    NSURL* urlURL = [NSURL URLWithString:url];
+    NSURLRequest* req = [NSURLRequest requestWithURL:urlURL
+                                         cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                     timeoutInterval:self.timeoutInterval];
+    self.connection = [NSURLConnection connectionWithRequest:req delegate:self];
+    [self.connection start];
     
 }
 
 - (void) geocodeStreet:(NSString *)street houseNumber:(NSString *)houseNumber city:(NSString *)city postCode:(NSString *)postCode county:(NSString *)county state:(NSString *)string country:(NSString *)country completionHandler:(NKGeocodeCompletionHandler)completionHandler{
     
     [self validateSettings];
+    
+    //TODO: implement
 }
 
 #pragma mark Reverse Geocoding
@@ -163,6 +177,35 @@
 
 - (void)reverseGeocodeOsmID:(long)osmID ofType:(OSMType)type completionHandler:(NKReverseGeocodeCompletionHandler)completionHandler{
     [self validateSettings];
+}
+
+#pragma mark NSURLConnectionDelegate
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)d
+{
+    [self.responseData appendData:d];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    //TODO: parse response
+    //TODO: callback success
+    self.geocodeCompletionHandler([NSArray array], nil);
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    self.responseData = nil;
+    
+}
+
+- (void)connection:(NSURLConnection *)con didReceiveResponse:(NSURLResponse *)response
+{
+    if( ((NSHTTPURLResponse*)response).statusCode == 200) {
+        self.responseData = [NSMutableData dataWithCapacity:response.expectedContentLength];
+    } else {
+        //TODO: handle other response-types
+    }
 }
 
 @end
