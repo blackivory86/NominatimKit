@@ -8,8 +8,10 @@
 
 #import "NKGeocoder.h"
 #import "NSString+URLEncode.h"
+#import "NominatimRequest.h"
+#import "GeocodeRequest.h"
 
-@interface NKGeocoder() <NSURLConnectionDelegate>
+@interface NKGeocoder()
 
 - (NSString*) buildGeneralParamsQueryString;
 
@@ -19,9 +21,7 @@
 
 - (void) validateSettings;
 
-@property (strong) NSURLConnection* connection;
-@property (strong) NSMutableData* responseData;
-@property (strong) NKGeocodeCompletionHandler geocodeCompletionHandler;
+@property (strong) NominatimRequest* currentRequest;
 
 @end
 
@@ -32,6 +32,17 @@
     NSString* errorMsgs = @"";
     if(!self.email){
         errorMsgs = [errorMsgs stringByAppendingString:@"email property must be set; "];
+    }
+    
+    //Test if a server-URL was set
+    if(!self.nominatimServerURL || self.nominatimServerURL.length == 0){
+        errorMsgs = [errorMsgs stringByAppendingString:@"nominatimServerURL must be set; "];
+    }
+    
+    //Add / to URL if necessary
+    if(![self.nominatimServerURL hasSuffix:@"/"]){
+        NSLog(@"Appending / to URL");
+        self.nominatimServerURL = [self.nominatimServerURL stringByAppendingString:@"/"];
     }
     
     if(errorMsgs.length > 0){
@@ -46,7 +57,7 @@
     NSString* newQuery = nil;
     
     //Output format
-    queryParamStr = [@"format=" stringByAppendingString:@"xml"];
+    queryParamStr = [@"&format=" stringByAppendingString:@"xml"];
     
     //Accept-Language
     if(self.acceptLanguage){
@@ -113,15 +124,14 @@
 #pragma mark forward Geocoding
 
 - (void)geocodeQuery:(NSString *)query boundingBox:(NKBoundingBox)bbox limitToBoundingBox:(BOOL)limitToBox completionHandler:(NKGeocodeCompletionHandler)completionHandler{
-    
+
     //Check if email is set
     [self validateSettings];
     
     //TODO: check if there's still a thread running
     
     //Build query string
-    NSString* url = [NKGeocoder nominatimServerURL];
-    url = [url stringByAppendingString:@"search?"];
+    NSString* url = [self.nominatimServerURL stringByAppendingString:@"search?"];
     
     //Query-String
     if(query && query.length > 0){
@@ -131,7 +141,7 @@
     } else {
         //TODO: define good domain and error-code
         NSError* e = [NSError errorWithDomain:@"NominationKitErrorDomain" code:100 userInfo:nil];
-        completionHandler(nil, e);
+        dispatch_async(dispatch_get_main_queue(), ^{ completionHandler(nil, e); } );
         return;
     }
     
@@ -151,14 +161,14 @@
     NSString* otherParams = [self buildGeocodeParamsQueryString];
     url = [url stringByAppendingString:otherParams];
     
+    NSLog(@"built URL is: %@", url);
     //start query
     NSURL* urlURL = [NSURL URLWithString:url];
-    NSURLRequest* req = [NSURLRequest requestWithURL:urlURL
-                                         cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                     timeoutInterval:self.timeoutInterval];
-    self.connection = [NSURLConnection connectionWithRequest:req delegate:self];
-    [self.connection start];
     
+    GeocodeRequest* req = [[GeocodeRequest alloc] init];
+    req.geocodeCompletionHandler = completionHandler;
+    self.currentRequest = req;
+    [self.currentRequest startRequestWithURL:urlURL andTimeoutInterval:self.timeoutInterval];
 }
 
 - (void) geocodeStreet:(NSString *)street houseNumber:(NSString *)houseNumber city:(NSString *)city postCode:(NSString *)postCode county:(NSString *)county state:(NSString *)string country:(NSString *)country completionHandler:(NKGeocodeCompletionHandler)completionHandler{
@@ -179,33 +189,6 @@
     [self validateSettings];
 }
 
-#pragma mark NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)d
-{
-    [self.responseData appendData:d];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    //TODO: parse response
-    //TODO: callback success
-    self.geocodeCompletionHandler([NSArray array], nil);
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    self.responseData = nil;
-    
-}
-
-- (void)connection:(NSURLConnection *)con didReceiveResponse:(NSURLResponse *)response
-{
-    if( ((NSHTTPURLResponse*)response).statusCode == 200) {
-        self.responseData = [NSMutableData dataWithCapacity:response.expectedContentLength];
-    } else {
-        //TODO: handle other response-types
-    }
-}
 
 @end

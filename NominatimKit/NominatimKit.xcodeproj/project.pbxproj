@@ -11,7 +11,6 @@
 		6B99E31616A343C70052E7EB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B99E31416A3439E0052E7EB /* CoreLocation.framework */; };
 		6B99E31816A344970052E7EB /* NKGeoBoundingBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B99E31716A344970052E7EB /* NKGeoBoundingBox.m */; };
 		6B99E32016A5EB4B0052E7EB /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B99E31F16A5EB4B0052E7EB /* NSString+URLEncode.m */; };
-		6B99E32716A5F7100052E7EB /* SenTestingKitAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B99E32516A5F7100052E7EB /* SenTestingKitAsync.m */; };
 		6BCA337B16A0B54F001DC522 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCA337A16A0B54F001DC522 /* Foundation.framework */; };
 		6BCA338A16A0B54F001DC522 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCA338916A0B54F001DC522 /* SenTestingKit.framework */; };
 		6BCA338C16A0B54F001DC522 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCA338B16A0B54F001DC522 /* UIKit.framework */; };
@@ -24,6 +23,10 @@
 		6BCA33AA16A0BF23001DC522 /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA33A916A0BF23001DC522 /* Place.m */; };
 		6BCA33AC16A0C1F6001DC522 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BCA33AB16A0C1F6001DC522 /* MapKit.framework */; };
 		6BCA33B216A0C61D001DC522 /* NKGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCA33B116A0C61D001DC522 /* NKGeocoder.m */; };
+		6BD2539016BB001700CECEF4 /* NominatimRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD2538F16BB001700CECEF4 /* NominatimRequest.m */; };
+		6BD2539516BB031200CECEF4 /* GeocodeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD2539416BB031200CECEF4 /* GeocodeRequest.m */; };
+		6BD2539616BB0F4500CECEF4 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B99E31F16A5EB4B0052E7EB /* NSString+URLEncode.m */; };
+		6BD2539916BB20F800CECEF4 /* SenAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD2539816BB20F800CECEF4 /* SenAsyncTestCase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +56,6 @@
 		6B99E31716A344970052E7EB /* NKGeoBoundingBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NKGeoBoundingBox.m; sourceTree = "<group>"; };
 		6B99E31E16A5EB4B0052E7EB /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
 		6B99E31F16A5EB4B0052E7EB /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
-		6B99E32516A5F7100052E7EB /* SenTestingKitAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SenTestingKitAsync.m; sourceTree = "<group>"; };
-		6B99E32616A5F7100052E7EB /* SenTestingKitAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SenTestingKitAsync.h; sourceTree = "<group>"; };
 		6BCA337716A0B54F001DC522 /* libNominatimKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNominatimKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BCA337A16A0B54F001DC522 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6BCA337E16A0B54F001DC522 /* NominatimKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NominatimKit-Prefix.pch"; sourceTree = "<group>"; };
@@ -76,6 +77,12 @@
 		6BCA33B116A0C61D001DC522 /* NKGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NKGeocoder.m; sourceTree = "<group>"; };
 		6BCA33B316A0C88C001DC522 /* NominatimKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NominatimKit.h; sourceTree = "<group>"; };
 		6BCA33B416A0D59C001DC522 /* NKGeoBoundingBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NKGeoBoundingBox.h; sourceTree = "<group>"; };
+		6BD2538E16BB001700CECEF4 /* NominatimRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NominatimRequest.h; sourceTree = "<group>"; };
+		6BD2538F16BB001700CECEF4 /* NominatimRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NominatimRequest.m; sourceTree = "<group>"; };
+		6BD2539316BB031200CECEF4 /* GeocodeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocodeRequest.h; sourceTree = "<group>"; };
+		6BD2539416BB031200CECEF4 /* GeocodeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocodeRequest.m; sourceTree = "<group>"; };
+		6BD2539716BB20F800CECEF4 /* SenAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SenAsyncTestCase.h; sourceTree = "<group>"; };
+		6BD2539816BB20F800CECEF4 /* SenAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SenAsyncTestCase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +154,7 @@
 		6BCA337C16A0B54F001DC522 /* NominatimKit */ = {
 			isa = PBXGroup;
 			children = (
+				6BD2539216BB01DE00CECEF4 /* Request */,
 				6B99E31D16A5EB300052E7EB /* Utility */,
 				6BCA337D16A0B54F001DC522 /* Supporting Files */,
 				6BCA33A216A0B5C3001DC522 /* NKReverseGeocodeResult.h */,
@@ -175,11 +183,11 @@
 		6BCA339116A0B54F001DC522 /* NominatimKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				6B99E32516A5F7100052E7EB /* SenTestingKitAsync.m */,
-				6B99E32616A5F7100052E7EB /* SenTestingKitAsync.h */,
 				6BCA339716A0B54F001DC522 /* NominatimKitTests.h */,
 				6BCA339816A0B54F001DC522 /* NominatimKitTests.m */,
 				6BCA339216A0B54F001DC522 /* Supporting Files */,
+				6BD2539716BB20F800CECEF4 /* SenAsyncTestCase.h */,
+				6BD2539816BB20F800CECEF4 /* SenAsyncTestCase.m */,
 			);
 			path = NominatimKitTests;
 			sourceTree = "<group>";
@@ -191,6 +199,17 @@
 				6BCA339416A0B54F001DC522 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6BD2539216BB01DE00CECEF4 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				6BD2538E16BB001700CECEF4 /* NominatimRequest.h */,
+				6BD2538F16BB001700CECEF4 /* NominatimRequest.m */,
+				6BD2539316BB031200CECEF4 /* GeocodeRequest.h */,
+				6BD2539416BB031200CECEF4 /* GeocodeRequest.m */,
+			);
+			name = Request;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +316,8 @@
 				6BCA33B216A0C61D001DC522 /* NKGeocoder.m in Sources */,
 				6B99E31816A344970052E7EB /* NKGeoBoundingBox.m in Sources */,
 				6B99E32016A5EB4B0052E7EB /* NSString+URLEncode.m in Sources */,
+				6BD2539016BB001700CECEF4 /* NominatimRequest.m in Sources */,
+				6BD2539516BB031200CECEF4 /* GeocodeRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,8 +325,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BD2539616BB0F4500CECEF4 /* NSString+URLEncode.m in Sources */,
 				6BCA339916A0B54F001DC522 /* NominatimKitTests.m in Sources */,
-				6B99E32716A5F7100052E7EB /* SenTestingKitAsync.m in Sources */,
+				6BD2539916BB20F800CECEF4 /* SenAsyncTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

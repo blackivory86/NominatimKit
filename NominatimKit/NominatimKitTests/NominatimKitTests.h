@@ -7,7 +7,7 @@
 //
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "SenAsyncTestCase.h"
 
-@interface NominatimKitTests : SenTestCase
-
+@interface NominatimKitTests : SenAsyncTestCase
 @end

@@ -97,14 +97,9 @@ typedef void (^NKReverseGeocodeCompletionHandler)(NKReverseGeocodeResult* result
 @property long timeoutInterval;
 
 /**
- Set the baseURL of the nominatim server used for all querys
- */
-+ (void) setNominatimServerURL:(NSString*)serverURL;
-
-/**
  get the previously set URL of the nominatim server
  */
-+ (NSString*) nominatimServerURL;
+@property (strong) NSString* nominatimServerURL;
 
 
 @end
